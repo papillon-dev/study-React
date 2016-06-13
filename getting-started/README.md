@@ -73,7 +73,7 @@ React가 처리할 수 있는 data의 한 조각이다.
 
 ## 함께 익히면 좋은 기술들
 
-* **Redux:** data와 UI의 state를 관리.
-* **Webpack:** module bundler
-* **Babel:** Transform Compiler
-* **ES6:** ECMAScript 2015 :+1:
+* **[Redux](http://redux.js.org/index.html):** data와 UI의 state를 관리.
+* **[Webpack](https://webpack.github.io/):** module bundler
+* **[Babel](http://babeljs.io/):** Transform Compiler
+* **[ES6](https://github.com/lukehoban/es6features):** ECMAScript 6 :+1:
