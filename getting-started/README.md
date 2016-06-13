@@ -6,7 +6,9 @@ React is a JavaScript library for building user interfaces.
 
 ### Just Components
 주로 MVC의 View로 React를 사용 (타 framework 사용 가능)
+
 재사용이 가능한 Component
+
 ![components](components.png)
 
 ### Virtual DOM
