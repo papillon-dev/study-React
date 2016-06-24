@@ -25,16 +25,19 @@ onScroll      , onWheel       , onCopy      , onCut           , onPaste
 
 
 >## 이벤트 전달하기
-:인라인 함수 추가
 
+
+:인라인 함수 추가
   {```
     <div className="card_title" onClick={
       ()=> this.setState({showDetails : !this.state.showDetails})
     }>
+  ```}  
 
 ####이런 방법 말고  바인드를 이용해 보자
-:bind
 
+:bind
+  {```
         constructor(){
           super(...arg);
           this.state = {
