@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Plusing Heart</title>
+    <style media="screen">
+      body {
+        text-align: center;
+      }
+      @keyframes plusing-heart {
+        0% {
+          transform: none;
+        }
+        50% {
+          transform: scale(1.4);
+        }
+        100% {
+          transform: none;
+        }
+      }
+      .heart {
+        color: #FF0000;
+      }
+      .heart:hover {
+        animation: plusing-heart .5s infinite;
+        transform-origin: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div><div class="heart">&hearts;</div>
+  </body>
+</html>

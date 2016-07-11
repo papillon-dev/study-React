@@ -19,6 +19,7 @@
 
 ### 키프레임 애니메이션
 - keyframe을 통해 트랜지션에 비해 세부적으로 제어
+
   ```
   @keyframes plusing-heart {
     0% { transform: none; };
@@ -35,6 +36,41 @@
 ## ReactCSSTransitionGroup
 - 애니메이션에 포함할 모든 컴포넌트를 래핑하여 컴포넌트 수명주기(마운팅, 언마운팅)와 연관된 특정한 시점에 애니메이션과 트랜지션을 트리거
 - 애드온으로 제공되기 때문에 ```npm install --save react-addons-css-transition-group```설치 필요
+
+### ReactCSSTransitionGroup 요소 추가
+- 애니메이션 적용하려는 자식요소는 ReactCSSTransitionGroup 요소로 래핑
+- transitionName, transitionEnterTimeout, transitionLeaveTimeout(밀리초) 세가지 속성 포함
+
+```
+return (
+  <div>
+    <ReactCSSTransitionGroup transitionName="example"
+                             transitionEnterTimeout={300}
+                             transitionLeaveTimeout={300}>
+       {shoppingItems}
+    </ReactCSSTransitionGroup>
+    <input type="text" value={this.state.newItem} onKeyDown={this.handleChange.bind(this)} />
+  </div>
+  )
+  // 새로운 항목 추가시 example-enter 라는 className
+```
+
+### 초기 마운팅 애니메이션
+```
+return (
+  <div>
+    <ReactCSSTransitionGroup transitionName="example"
+                             transitionEnterTimeout={300}
+                             transitionLeaveTimeout={300}
+                             *transitionAppear={true}*
+                             *transitionAppearTimeout={300}*>
+       {shoppingItems}
+    </ReactCSSTransitionGroup>
+  </div>
+  )
+  // 초기 항목이 표시될 때 애니메이션 적용
+  // transitionAppear처음 마운팅시 적용되는 초기 트랜지션 단계 추가. 기본값 false.
+```
 
 ## 드래그 앤드 드롭
 - 드래그앤드드롭: 객체를 다른 위치로 끌어서 이동
