@@ -58,14 +58,14 @@ render(<App/>, document.getElementById('root'));
 ```
 
 2. 시나리오
-- URL의 hash 변화를 이용한다
-- Hash string에 해당하는 component를 직접 switch문으로 할당하여 render한다
+	- URL의 hash 변화를 이용한다
+	- Hash string에 해당하는 component를 직접 switch문으로 할당하여 render한다
 
 3. 잠재적 문제
 
-- URL 유지보수가 헬에 가까워진다.
-- 웹사이트 구조가 복잡해지면 라우팅관련 코드가 기하급수적으로 늘어날 수 있다
-- URL 코드를 파싱하려다 결국 코드 숫자가 엄청 늘어나게 될 것이다.
+	- URL 유지보수가 헬에 가까워진다.
+	- 웹사이트 구조가 복잡해지면 라우팅관련 코드가 기하급수적으로 늘어날 수 있다
+	- URL 코드를 파싱하려다 결국 코드 숫자가 엄청 늘어나게 될 것이다.
 
 
 4. 해결방안 - 플러그인을 쓰십시오..  (React Router library)
@@ -84,9 +84,9 @@ render(<App/>, document.getElementById('root'));
 
 3. 사용하기
 
-React Router가 제공하는 세가지 컴포넌트 - { Router, Route, Link }
-- Router, Route: XML 선언문 형태로, 네스팅 레벨에 따라 직관적으로 라우팅을 선언할 수 있게 해주는 컴포넌트
-- Link: 라우터와 연계하여 해당하는 route로 가는 주소를 사용자에 뿌려줌
+	React Router가 제공하는 세가지 컴포넌트 - { Router, Route, Link }
+	- Router, Route: XML 선언문 형태로, 네스팅 레벨에 따라 직관적으로 라우팅을 선언할 수 있게 해주는 컴포넌트
+	- Link: 라우터와 연계하여 해당하는 route로 가는 주소를 사용자에 뿌려줌
 
 	**수정된 App.js(모든 코드가 아니라 수정된 부분만 기술함)**
 
