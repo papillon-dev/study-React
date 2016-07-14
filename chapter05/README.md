@@ -549,7 +549,7 @@ class App extends Component{
 				<div style={styles.root}>
 					<div style={styles.alert}>&#9888;</div>
 					<h1>Ops, we have a problem</h1>
-					<p>Sorry, we couldn't access the repositories. Please try again in a few moments.</p>
+					<p>Sorry, we couldnt access the repositories. Please try again in a few moments.</p>
 				</div>
 			);
 		}
