@@ -12,55 +12,55 @@
 
 1. URL에 따라, 해당하는 자식 컴포넌트를 불러내는 부모컴포넌트 제작
 
-```javascript
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+	```javascript
+	import React, { Component } from 'react';
+	import { render } from 'react-dom';
 
-import About from './About.jsx';
-import Home from './Home.jsx';
-import Repos from './Repos.jsx';
+	import About from './About.jsx';
+	import Home from './Home.jsx';
+	import Repos from './Repos.jsx';
 
-class App extends Component{
-	constructor(){
-		super(...arguments);
-		this.state = {
-			route: window.location.hash.substr(1) // 1) www.example.com/#someId 에서 "someId" 리턴
-		};
-	}
-
-	componentDidMount(){
-		window.addEventListener('hashchange', () => {
-			this.setState({
-				route: window.lcoation.hash.substr(1)
-			});
-		});
-	}
-
-	render(){
-			var Child;
-			switch(this.state.route){ // 2) 자른 문자열에 따라 각기 다른 컴포넌트를 Child로 할당
-				case '/about': Child = About; break;
-				case 'repos': Child = Repos; break;
-				default: Child = Home;
-			}
-
-			return (
-				<div>
-					<header>App</header>
-					<nav> // 3) menu 태그는 firefox에서만 지원하므로 nav로 대체
-						<ul>
-							<li><a href="#/about">About</a></li>
-							<li><a href="#/repos">Repos</a></li>
-						</ul>
-					</nav>
-					<Child/> // 3) 해당 콤포넌트 render하기
-				</div>
-			);
+	class App extends Component{
+		constructor(){
+			super(...arguments);
+			this.state = {
+				route: window.location.hash.substr(1) // 1) www.example.com/#someId 에서 "someId" 리턴
+			};
 		}
-}
 
-render(<App/>, document.getElementById('root'));
-```
+		componentDidMount(){
+			window.addEventListener('hashchange', () => {
+				this.setState({
+					route: window.lcoation.hash.substr(1)
+				});
+			});
+		}
+
+		render(){
+				var Child;
+				switch(this.state.route){ // 2) 자른 문자열에 따라 각기 다른 컴포넌트를 Child로 할당
+					case '/about': Child = About; break;
+					case 'repos': Child = Repos; break;
+					default: Child = Home;
+				}
+
+				return (
+					<div>
+						<header>App</header>
+						<nav> // 3) menu 태그는 firefox에서만 지원하므로 nav로 대체
+							<ul>
+								<li><a href="#/about">About</a></li>
+								<li><a href="#/repos">Repos</a></li>
+							</ul>
+						</nav>
+						<Child/> // 3) 해당 콤포넌트 render하기
+					</div>
+				);
+			}
+	}
+
+	render(<App/>, document.getElementById('root'));
+	```
 
 2. 시나리오
 	- URL의 hash 변화를 이용한다
@@ -83,9 +83,9 @@ render(<App/>, document.getElementById('root'));
 2. 설치하기
 	- React Router와 history 플러그인을 함께 설치합니다.
 
-	```CLI
-	$ npm install --save react-router@1.x.x history@1.x.x
-	```
+		```CLI
+		$ npm install --save react-router@1.x.x history@1.x.x
+		```
 
 3. 사용하기
 
@@ -134,27 +134,27 @@ render(<App/>, document.getElementById('root'));
 
 	- ReactDOM
 
-	```javascript
-	reactDOM.render(
-		(<Router>
-			<Route path='/' component={App}>
-				<Route path='groups' components={{content:Groups, sidebar: GroupsSidebar}}/>
-				<Route path='users' components={{content:Users, sidebar: UsersSidebar}}/>
-			</Route>
-		</Router>), element);
-	```
+		```javascript
+		reactDOM.render(
+			(<Router>
+				<Route path='/' component={App}>
+					<Route path='groups' components={{content:Groups, sidebar: GroupsSidebar}}/>
+					<Route path='users' components={{content:Users, sidebar: UsersSidebar}}/>
+				</Route>
+			</Router>), element);
+		```
 
 	- Component's methods
 
-	```javascript
-	render(){
-		return(
-			<div>
-				{this.props.children.sidebar} - {this.props.children.content}
-			</div>
-		);
-	}
-	```
+		```javascript
+		render(){
+			return(
+				<div>
+					{this.props.children.sidebar} - {this.props.children.content}
+				</div>
+			);
+		}
+		```
 
 ## URL 파라미터
 
@@ -167,64 +167,64 @@ render(<App/>, document.getElementById('root'));
 
 	- Repos.jsx 수정
 
-	```javascript
-	class Repos extends Component{
-		constructor(){
-			super(...arguments);
-			this.state = {
-				repositories:[]
-			};
-		}
+		```javascript
+		class Repos extends Component{
+			constructor(){
+				super(...arguments);
+				this.state = {
+					repositories:[]
+				};
+			}
 
-		componentDidMount(){
-			fetch('https://api.github.com/users/pro-react/repos')
-				.then( (response) => response.json() )
-				.then( (responseData) => {
-					this.setState({repositories:responseData});
-				});
+			componentDidMount(){
+				fetch('https://api.github.com/users/pro-react/repos')
+					.then( (response) => response.json() )
+					.then( (responseData) => {
+						this.setState({repositories:responseData});
+					});
+			}
+			render(){
+				let repos = this.state.repositories.map((repo) => (
+					<li key={repo.id}> {repo.name} </li>
+				));
+				return(
+					<div>
+						<h1>Github Repos</h1>
+						<ul>
+							{repos}
+						</ul>
+					</div>
+				);
+			}
 		}
-		render(){
-			let repos = this.state.repositories.map((repo) => (
-				<li key={repo.id}> {repo.name} </li>
-			));
-			return(
-				<div>
-					<h1>Github Repos</h1>
-					<ul>
-						{repos}
-					</ul>
-				</div>
-			);
-		}
-	}
-	```
+		```
 
 	- Repos.jsx에 Link 컴포넌트 추가하여 동적으로 파라미터 붙이기
 
-	```javascript
-	import { Link } from 'react-router'
-	class Repos extend Component{
-		constructor(){...}
+		```javascript
+		import { Link } from 'react-router'
+		class Repos extend Component{
+			constructor(){...}
 
-		componentDidMount(){...}
+			componentDidMount(){...}
 
-		render(){
-			let repos = this.state.repositories.map((repo) => (
-				<li key={repo.id}>
-					<Link to={`/repos/details/${repo.name}`}>{repo.name}</Link>
-				</li>
-			));
-			return(
-				<div>
-					<h1>Github Repos</h1>
-					<ul>
-						{repos}
-					</ul>
-				</div>
-			);
+			render(){
+				let repos = this.state.repositories.map((repo) => (
+					<li key={repo.id}>
+						<Link to={`/repos/details/${repo.name}`}>{repo.name}</Link>
+					</li>
+				));
+				return(
+					<div>
+						<h1>Github Repos</h1>
+						<ul>
+							{repos}
+						</ul>
+					</div>
+				);
+			}
 		}
-	}
-	```
+		```
 
 2. RepoDetails 컴포넌트 만들기
 	1. React Router가 파라미터인 repo_name을 RepoDetails 컴포넌트의 prop 값으로 주입
@@ -234,78 +234,78 @@ render(<App/>, document.getElementById('root'));
 		- 문제: componentDidMount는 렌더링 이후 딱 한번만 실행됨
 		- 해결: componentWillReceiveProps는 컴포넌트가 새로운 props를 받을 때마다 실행됨 (첫 렌더링시에는 실행안됨), 해당 라이프사이클에 fetchData 메소드 실행시키기
 
-	```javascript
-	import React, { Component } from 'react';
-	import 'whatwg-fetch'
-	class RepoDetails extends Component{
-		constructor(){
-			super(...arguments);
-			this.state={
-				repository:{}
-			};
-		}
-
-		fetchData(repo_name){
-			fetch(`https://api.github.com/repos/pro-react/${repo_name}`)
-			.then( (response)=>response.json() )
-			.then((responseData)=>{
-				this.setState({repository:responseData});
-			});
-		}
-
-		componentDidMount(){
-			// 라우터가 repo_name을 prop 파라미터로 주입함
-			let repo_name = this.props.params.repo_name;
-			this.fetchData(repo_name);
-		}
-
-		componentWillReceiveProps(nextProps){
-			let repo_name = nextProps.params.repo_name;
-			this.fetchData(repo_name);
-		}
-
-		render(){
-			let stars = [];
-			for (var i = 0; i < this.state.repository.stargazers_count ; i++){
-				stars.push('★');
+		```javascript
+		import React, { Component } from 'react';
+		import 'whatwg-fetch'
+		class RepoDetails extends Component{
+			constructor(){
+				super(...arguments);
+				this.state={
+					repository:{}
+				};
 			}
 
-			return(
-				<div>
-					<h2>{this.state.repository.name}</h2>
-					<p>{this.state.repository.description}</p>
-					<span>{stars}</span>
-				</div>
-			);
-		}
-	}
+			fetchData(repo_name){
+				fetch(`https://api.github.com/repos/pro-react/${repo_name}`)
+				.then( (response)=>response.json() )
+				.then((responseData)=>{
+					this.setState({repository:responseData});
+				});
+			}
 
-	export default RepoDetails;
-	```
+			componentDidMount(){
+				// 라우터가 repo_name을 prop 파라미터로 주입함
+				let repo_name = this.props.params.repo_name;
+				this.fetchData(repo_name);
+			}
+
+			componentWillReceiveProps(nextProps){
+				let repo_name = nextProps.params.repo_name;
+				this.fetchData(repo_name);
+			}
+
+			render(){
+				let stars = [];
+				for (var i = 0; i < this.state.repository.stargazers_count ; i++){
+					stars.push('★');
+				}
+
+				return(
+					<div>
+						<h2>{this.state.repository.name}</h2>
+						<p>{this.state.repository.description}</p>
+						<span>{stars}</span>
+					</div>
+				);
+			}
+		}
+
+		export default RepoDetails;
+		```
 
 3. App.jsx파일 업데이트 해주기
 
 	- RepoDetails import
 
-	```javascript
-	import RepoDetails from './RepoDetails';
-	```
+		```javascript
+		import RepoDetails from './RepoDetails';
+		```
 
 	- Route 설정
 
-	```javascript
-	render((
-		<Router>
-			<Route path="/" component={App}>
-				<IndexRoute component={Home}/>
-				<Route path="about" component={About}/>
-				<Route path="repos" component={Repos}>
-					<Route path="details/:repo_name" component={RepoDetails}/>
+		```javascript
+		render((
+			<Router>
+				<Route path="/" component={App}>
+					<IndexRoute component={Home}/>
+					<Route path="about" component={About}/>
+					<Route path="repos" component={Repos}>
+						<Route path="details/:repo_name" component={RepoDetails}/>
+					</Route>
 				</Route>
-			</Route>
-		</Router>
-	), document.getElementById('root'));
-	```
+			</Router>
+		), document.getElementById('root'));
+		```
 
 	- :repo_name과 같은 dynamic segment를 Route에 지정하면 React Router 플러그인이 해당하는 파라미터를 알아서 주입시켜준다.
 
@@ -390,46 +390,46 @@ class App extends Component{
 
 2. RepoDetails 수정하기
 	- Array.prototype.find가 구형 브라우저에서 지원되지 않으므르 babel-polyfill 다운받고 import 시키기
-	```CLI
-	$ npm install --save-dev babel-polyfill
-	```
+		```CLI
+		$ npm install --save-dev babel-polyfill
+		```
 
-	```javascript
-	// RepoDetails.jsx
-	import React, { Component } from 'react';
-	import 'babel-polyfill';
-	```
+		```javascript
+		// RepoDetails.jsx
+		import React, { Component } from 'react';
+		import 'babel-polyfill';
+		```
 
 	- API는 상위 컴포넌트에서 받아서 넘겨줬으므로, lifecycle에 셋업해두었던 fetchData를 다 없애고, props에 접근하도록 개조해야 함
-		- constructor, componentWillReceiveProps, componentDidMount 메소드 제거하기
-		- state가 제거됐으므로 props에 접근하기
+		1. constructor, componentWillReceiveProps, componentDidMount 메소드 제거하기
+		1. state가 제거됐으므로 props에 접근하기
 
-	```javascript
-	class RepoDetails extends Component{
-		renderRepository(){
-			let repository = this.props.repositories.find((repo) => repo.name === this.props.params.repo_name);
-			let stars = [];
-			for (var i = 0; i < repository.stargazers_count ; i++){
-				stars.push('★');
-			}
+		```javascript
+		class RepoDetails extends Component{
+			renderRepository(){
+				let repository = this.props.repositories.find((repo) => repo.name === this.props.params.repo_name);
+				let stars = [];
+				for (var i = 0; i < repository.stargazers_count ; i++){
+					stars.push('★');
+				}
 
-			return(
-				<div>
-					<h2>{repository.name}</h2>
-					<p>{repository.description}</p>
-					<span>{stars}</span>
-				</div>
-			);
-		}
-		render(){
-			if(this.props.repositories.length > 0){
-				return this.renderRepository();
-			}else{
-				return <h4>Loading...</h4>;
+				return(
+					<div>
+						<h2>{repository.name}</h2>
+						<p>{repository.description}</p>
+						<span>{stars}</span>
+					</div>
+				);
+			}
+			render(){
+				if(this.props.repositories.length > 0){
+					return this.renderRepository();
+				}else{
+					return <h4>Loading...</h4>;
+				}
 			}
 		}
-	}
-	```
+		```
 
 ## URL과 UI 비동조화시키기 (다르게 나타내기)
 - 필요성: /repos/details/:repo_name이 다소 긴 감이 있는데 이것을 더 짧게 줄이는 것이 가능함
@@ -438,19 +438,19 @@ class App extends Component{
 1. 수정 전
 	- App.jsx
 
-	```javascript
-	render((
-		<Router>
-			<Route path="/" component={App}>
-				<IndexRoute component={Home}/>
-				<Route path="about" component={About} title="About Us"/>
-				<Route path="repos" component={Repos}>
-					<Route path="details/:repo_name" component={RepoDetails}/>
+		```javascript
+		render((
+			<Router>
+				<Route path="/" component={App}>
+					<IndexRoute component={Home}/>
+					<Route path="about" component={About} title="About Us"/>
+					<Route path="repos" component={Repos}>
+						<Route path="details/:repo_name" component={RepoDetails}/>
+					</Route>
 				</Route>
-			</Route>
-		</Router>
-	), document.getElementById('root'));
-	```
+			</Router>
+		), document.getElementById('root'));
+		```
 	- Repos.jsx
 
 		```javascript
@@ -476,40 +476,40 @@ class App extends Component{
 
 	- App.jsx
 
-	```javascript
-	render((
-		<Router>
-			<Route path="/" component={App}>
-				<IndexRoute component={Home}/>
-				<Route path="about" component={About} title="About Us"/>
-				<Route path="repos" component={Repos}>
-					<Route path="/repo/:repo_name" component={RepoDetails}/>
+		```javascript
+		render((
+			<Router>
+				<Route path="/" component={App}>
+					<IndexRoute component={Home}/>
+					<Route path="about" component={About} title="About Us"/>
+					<Route path="repos" component={Repos}>
+						<Route path="/repo/:repo_name" component={RepoDetails}/>
+					</Route>
 				</Route>
-			</Route>
-		</Router>
-	), document.getElementById('root'));
-	```
+			</Router>
+		), document.getElementById('root'));
+		```
 
 	- Repos.jsx
 
-	```javascript
-	class Repos extends Component{
-		constructor(){...}
+		```javascript
+		class Repos extends Component{
+			constructor(){...}
 
-		componentDidMount(){...}
-		render(){
-			let repos = this.state.repositories.map((repo) => (
-				<li key={repo.id}>
-					<Link to={`/repo/${repo.name}`}>{repo.name}</Link>
-				</li>
-			));
+			componentDidMount(){...}
+			render(){
+				let repos = this.state.repositories.map((repo) => (
+					<li key={repo.id}>
+						<Link to={`/repo/${repo.name}`}>{repo.name}</Link>
+					</li>
+				));
 
-			let child = this.props.children && React.cloneElement(...);
+				let child = this.props.children && React.cloneElement(...);
 
-			return(...);
+				return(...);
+			}
 		}
-	}
-	```
+		```
 
 ## 프로그램 자체적으로 Route 변경하기
 - 현재까지 구현한 코드는 사용자가 직접 Link 컴포넌트를 통해 프로그램을 동작시키는 방식 (링크를 누르면 프로그램이 그걸 받아서 처리해주는 방식)
@@ -520,7 +520,7 @@ class App extends Component{
 |Method|Description|
 |---|---|
 |pushState|새 URL로 이동시키는 기본적인 method, 파라미터 객체는 선택사항 <br/>history.pushState(null, '/users/123')<br/>history.pushState({showGrades: true}, '/users/123')
-|replaceState|asdasdasd|
+|replaceState|pushState와 문법은 같으나, history stack의 length를 바꾸지 않고 현재 URL을 새로운 URL로 '대체'시킴|
 |goBack|history상 바로 이전에 있는 페이지로 이동)|
 |goForward|history상 바로 다음에 있는 페이지로 이동(더 최근)|
 |Go| n번째 이전/이후 페이지로 이동 <br/> history.Go(-4) <br/> history.Go(2)|
@@ -636,26 +636,26 @@ class App extends Component{
 
 	- createBrowserHistory method 불러오기
 
-	```javascript
-	import createBrowserHistory from 'history/lib/createBrowserHistory';
-	```
+		```javascript
+		import createBrowserHistory from 'history/lib/createBrowserHistory';
+		```
 
 	- Router 설정하기
 
-	```javascript
-	render((
-		<Router history={createBrowserHistory()}>
-			<Route path="/" component={App}>
-				<IndexRoute component={Home}/>
-				<Route path="about" component={About} title="About Us"/>
-				<Route path="repos" component={Repos}>
-					<Route path="/repo/:repo_name" component={RepoDetails}/>
+		```javascript
+		render((
+			<Router history={createBrowserHistory()}>
+				<Route path="/" component={App}>
+					<IndexRoute component={Home}/>
+					<Route path="about" component={About} title="About Us"/>
+					<Route path="repos" component={Repos}>
+						<Route path="/repo/:repo_name" component={RepoDetails}/>
+					</Route>
+					<Route path="error" component={ServerError}/>
 				</Route>
-				<Route path="error" component={ServerError}/>
-			</Route>
-		</Router>
-	), document.getElementById('root'));
-	```
+			</Router>
+		), document.getElementById('root'));
+		```
 
 
 
