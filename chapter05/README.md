@@ -24,14 +24,14 @@
 		constructor(){
 			super(...arguments);
 			this.state = {
-				route: window.location.hash.substr(1) // 1) www.example.com/#someId 에서 "someId" 리턴
+				route: window.location.hash.substr(1) // 1) www.example.com/#/someId 에서 "/someId" 리턴
 			};
 		}
 
 		componentDidMount(){
 			window.addEventListener('hashchange', () => {
 				this.setState({
-					route: window.lcoation.hash.substr(1)
+					route: window.location.hash.substr(1)
 				});
 			});
 		}
@@ -40,7 +40,7 @@
 				var Child;
 				switch(this.state.route){ // 2) 자른 문자열에 따라 각기 다른 컴포넌트를 Child로 할당
 					case '/about': Child = About; break;
-					case 'repos': Child = Repos; break;
+					case '/repos': Child = Repos; break;
 					default: Child = Home;
 				}
 
@@ -345,7 +345,8 @@ class App extends Component{
 	- 예) ``` <Route path="about" component={About}/>```
 - 해당 Route 속성으로 Component Props 를 주입시킬 수 있음
 	- 예) ``` <Route path="about" component={About} title="About Us" />```
-- 주입한 About Component에서는 Route를 통해서 주입된 props에 **this.props.route.prop_name**으로 접근할 수 있음
+- About Component에서는 Route를 통해서 주입된 props에 **this.props.route.prop_name**으로 접근할 수 있음
+
 	```javascript
 	import React, {Component} from 'react';
 	class About extends Component{
@@ -355,7 +356,7 @@ class App extends Component{
 	}
 	```
 
-### 방법 2: 자식 컴포넌트에서 Pros 복제하고나서 다시 주입하기
+### 방법 2: 자식 컴포넌트에서 Props 복제하고나서 다시 주입하기
 - 동적으로 props가 변해야 하는 상황에서 유용한 방법
 - 기존방법의 문제: React Router가 RepoDetails 컴포넌트를 만든 뒤, Repo컴포넌트에서 props.children으로 넘겨서 렌더링 시켜버리기 때문에, 중간에서 props를 건드릴만한 여지가 없음
 - 해결방법: Repo 컴포넌트에서 this.props.children을 직접 렌더링하지 않고, 해당 컴포넌트를 복제한 뒤 추가 속성을 주입하여 렌더링 하기
@@ -364,29 +365,30 @@ class App extends Component{
 	- React.cloneElement 메소드를 이용해 자식 컴포넌트와 복제한 후 속성 주입시키기
 	- 복제한 컴포넌트를 child 변수에 담아 렌더링하기
 
-	```javascript
-	render(){
-		let repos = this.state.repositories.map((repo) => (
-			<li key={repo.id}>
-				<Link to={`/repos/details/${repo.name}`}>{repo.name}</Link>
-			</li>
-		));
-
-		let child = this.props.children && React.cloneElement(this.props.children, {repositories: this.state.repositories});
-
-
-		return(
-			<div>
-				<h1>Github Repos</h1>
-				<ul>
-					{repos}
-				</ul>
-				{child}
-			</div>
-
-		);
-	}
-	```
+		```javascript
+		render(){
+			let repos = this.state.repositories.map((repo) => (
+				<li key={repo.id}>
+					<Link to={`/repos/details/${repo.name}`}>{repo.name}</Link>
+				</li>
+			));
+	
+			let child = this.props.children && 
+						React.cloneElement(this.props.children, {repositories: this.state.repositories});
+	
+	
+			return(
+				<div>
+					<h1>Github Repos</h1>
+					<ul>
+						{repos}
+					</ul>
+					{child}
+				</div>
+	
+			);
+		}
+		```
 
 2. RepoDetails 수정하기
 	- Array.prototype.find가 구형 브라우저에서 지원되지 않으므르 babel-polyfill 다운받고 import 시키기
