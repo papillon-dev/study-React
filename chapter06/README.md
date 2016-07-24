@@ -35,3 +35,5 @@ AJAX 요청, 타이머, 웹소켓 이벤트 등을 통해서도 생성된다.
 디스패처는 액션을 스토어로 전달하는 과정을 조율하고 스토어의 액션 핸들러가 올바른 순서로 실행되도록 관리한다.
 
 ![figure6-4](figure6-4.png)
+
+[Flux 참고자료](https://kkak10.gitbooks.io/flux/content/index.html)
