@@ -17,8 +17,7 @@
 | 3 | Simon |
 | 4 | Joy |
 | 5 | Zach |
-| 6-1 | Noel |
-| 6-2 | Noel |
+| 6 | Noel |
 | 7 | Simon |
 | 8 | Deva |
 | 9 | Joy |
